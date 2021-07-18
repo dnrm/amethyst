@@ -39,40 +39,42 @@ export default function Keys() {
                                 <th className="text-center p-4">Actions</th>
                             </thead>
                             <tbody>
-                                {keys.result.items.map((i: any) => {
-                                    return (
-                                        <tr key={i.id} className="key p-4">
-                                            <td className="p-4">{i.name}</td>
-                                            <td className="p-4">
-                                                {i.description}
-                                            </td>
-                                            <td className="p-4">{i.id}</td>
-                                            <td className="p-4">
-                                                Api:{' '}
-                                                {i.stageKeys[0]
-                                                    ? i.stageKeys[0].split(
-                                                          '/'
-                                                      )[0]
-                                                    : 'None'}
-                                            </td>
-                                            <td className="p-4">
-                                                Api:{' '}
-                                                {i.stageKeys[0]
-                                                    ? i.stageKeys[0].split(
-                                                          '/'
-                                                      )[1]
-                                                    : 'None'}
-                                            </td>
-                                            <td className="p-4 flex justify-start items-center">
-                                                <Link href={`/k/` + i.id}>
-                                                    <a className="bg-blue-500 text-white text-center rounded-lg shadow-2xl py-2 px-8 w-full">
-                                                        View
-                                                    </a>
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
+                                { keys ? (
+                                    keys.result.items.map((i: any) => {
+                                        return (
+                                            <tr key={i.id} className="key p-4">
+                                                <td className="p-4">{i.name}</td>
+                                                <td className="p-4">
+                                                    {i.description}
+                                                </td>
+                                                <td className="p-4">{i.id}</td>
+                                                <td className="p-4">
+                                                    Api:{' '}
+                                                    {i.stageKeys[0]
+                                                        ? i.stageKeys[0].split(
+                                                              '/'
+                                                          )[0]
+                                                        : 'None'}
+                                                </td>
+                                                <td className="p-4">
+                                                    Api:{' '}
+                                                    {i.stageKeys[0]
+                                                        ? i.stageKeys[0].split(
+                                                              '/'
+                                                          )[1]
+                                                        : 'None'}
+                                                </td>
+                                                <td className="p-4 flex justify-start items-center">
+                                                    <Link href={`/k/` + i.id}>
+                                                        <a className="bg-blue-500 text-white text-center rounded-lg shadow-2xl py-2 px-8 w-full">
+                                                            View
+                                                        </a>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                ) : null}
                             </tbody>
                         </table>
                     ) : (

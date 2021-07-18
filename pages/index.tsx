@@ -34,7 +34,7 @@ export default function Home() {
             <Header>API Key Manager</Header>
             <section
                 id="get-started"
-                className="px-16 grid grid-cols-5 place-items-center"
+                className="px-16 py-16 md:py-0 grid grid-cols-1 md:grid-cols-5 place-items-center"
             >
                 <div className="text col-span-3">
                     <h2 className="text-4xl font-bold tracking-tighter">
