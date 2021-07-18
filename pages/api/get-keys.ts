@@ -13,13 +13,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     api.getApiKeys(params, (err, data) => {
         if (err) {
-            console.log(err)
             res.status(500).send({
                 status: 'server error',
                 error: err,
             })
         } else {
-            console.log(data)
             res.status(200).send({
                 message: 'success',
                 result: data,
