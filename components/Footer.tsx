@@ -5,7 +5,7 @@ const Footer = () => {
     const status = useAws()
 
     return (
-        <footer className="border-t-2 border-gray-300 bg-gray-100 p-4">
+        <footer className="border-t-2 border-gray-300 bg-gray-100 p-4 mt-8">
             <h1>© Daniel Medina</h1>
             <div className="status flex justify-start items-center">
             <p>

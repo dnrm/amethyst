@@ -8,11 +8,12 @@ import type KeyType from '../../types/Key'
 import Nav from '../../components/Nav'
 import Header from '../../components/Header'
 import Head from 'next/head'
+import Footer from '../../components/Footer'
 
 const Key = () => {
     const router = useRouter()
     const [key, setKey] = useState<KeyType>({})
-    const [session] = useSession();
+    const [session] = useSession()
 
     const { id } = router.query
 
@@ -30,46 +31,49 @@ const Key = () => {
     }, [id])
 
     return (
-        <main>
-            <Nav session={session} signIn={signIn}></Nav>
-            <Head>
-                <title>{id} | View Key</title>
-            </Head>
-            <Header>
-                View Key
-                <span className="inline-block rounded-lg text-3xl bg-gray-100 p-4 tracking-tighter">
-                    {id}
-                </span>
-            </Header>
-            <div className="spacer my-8 px-8">
-                <hr />
-            </div>
-            <section id="information" className="p-8">
-                <h1 className="text-4xl font-bold tracking-tighter">
-                    Information
-                </h1>
-                <div className="fields">
-                    <h2 className="text-2xl font-normal tracking-tighter">
-                        Name: {key.name}
-                    </h2>
-                    <h2 className="text-2xl font-normal tracking-tighter">
-                        Description: {key.description}
-                    </h2>
-                    <h2 className="text-2xl font-normal tracking-tighter">
-                        Enabled: {key.enabled ? 'True' : 'False'}
-                    </h2>
-                    <h2 className="text-2xl font-normal tracking-tighter">
-                        {/* @ts-ignore */}
-                        Created On: {new Date(key.createdDate).toDateString()}
-                    </h2>
+        <>
+            <main className="pb-16 -mb-28 min-h-screen">
+                <Nav session={session} signIn={signIn}></Nav>
+                <Head>
+                    <title>{id} | View Key</title>
+                </Head>
+                <Header>
+                    View Key
+                    <span className="inline-block rounded-lg text-3xl bg-gray-100 p-4 tracking-tighter">
+                        {id}
+                    </span>
+                </Header>
+                <div className="spacer my-8 px-8">
+                    <hr />
                 </div>
-            </section>
-        </main>
+                <section id="information" className="p-8">
+                    <h1 className="text-4xl font-bold tracking-tighter">
+                        Information
+                    </h1>
+                    <div className="fields">
+                        <h2 className="text-2xl font-normal tracking-tighter">
+                            Name: {key.name}
+                        </h2>
+                        <h2 className="text-2xl font-normal tracking-tighter">
+                            Description: {key.description}
+                        </h2>
+                        <h2 className="text-2xl font-normal tracking-tighter">
+                            Enabled: {key.enabled ? 'True' : 'False'}
+                        </h2>
+                        <h2 className="text-2xl font-normal tracking-tighter">
+                            Created On:{' '}
+                            {/* @ts-ignore */}
+                            {new Date(key.createdDate).toDateString()}
+                        </h2>
+                    </div>
+                </section>
+            </main>
+            <Footer />
+        </>
     )
 }
 
 export default Key
-
 
 export async function getServerSideProps(context: any) {
     const session = await getSession(context)
