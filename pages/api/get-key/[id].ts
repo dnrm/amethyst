@@ -22,13 +22,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         api.getApiKey(params, (err, data) => {
             if (err) {
-                console.log(err)
                 res.status(500).send({
                     status: 'server error',
                     error: err,
                 })
             } else {
-                console.log(data)
                 res.status(200).send({
                     message: 'success',
                     result: data,
@@ -36,7 +34,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             }
         })
     } catch (e) {
-        console.log(e)
         res.status(500).send(e)
     }
 }

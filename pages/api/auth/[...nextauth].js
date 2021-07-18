@@ -14,5 +14,5 @@ export default NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    adapter: FaunaAdapter({ faunaClient: client }),
+    // adapter: FaunaAdapter({ faunaClient: client }),
 })

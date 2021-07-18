@@ -1,11 +1,18 @@
 import React from 'react'
+import { useSession, signIn, getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+
 import type KeyType from '../../types/Key'
+
+import Nav from '../../components/Nav'
+import Header from '../../components/Header'
+import Head from 'next/head'
 
 const Key = () => {
     const router = useRouter()
     const [key, setKey] = useState<KeyType>({})
+    const [session] = useSession();
 
     const { id } = router.query
 
@@ -23,19 +30,21 @@ const Key = () => {
     }, [id])
 
     return (
-        <main className="p-8">
-            <div className="title flex justify-between items-center">
-                <h1 className="text-8xl font-bold tracking-tighter">
-                    View Key
-                </h1>
-                <span className="inline-block rounded-lg text-4xl bg-gray-100 p-4 tracking-tighter">
+        <main>
+            <Nav session={session} signIn={signIn}></Nav>
+            <Head>
+                <title>{id} | View Key</title>
+            </Head>
+            <Header>
+                View Key
+                <span className="inline-block rounded-lg text-3xl bg-gray-100 p-4 tracking-tighter">
                     {id}
                 </span>
-            </div>
-            <div className="spacer my-8">
+            </Header>
+            <div className="spacer my-8 px-8">
                 <hr />
             </div>
-            <section id="information">
+            <section id="information" className="p-8">
                 <h1 className="text-4xl font-bold tracking-tighter">
                     Information
                 </h1>
@@ -60,3 +69,23 @@ const Key = () => {
 }
 
 export default Key
+
+
+export async function getServerSideProps(context: any) {
+    const session = await getSession(context)
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    } else {
+        return {
+            props: {
+                session,
+            },
+        }
+    }
+}

@@ -1,10 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getSession } from 'next-auth/client'
+import { getSession, useSession, signIn } from 'next-auth/client'
+import Nav from '../components/Nav'
+import Header from '../components/Header'
 
 export default function Keys() {
     const [keys, setKeys] = useState<any>()
+    const [session, loading] = useSession()
 
     useEffect(() => {
         const get = async () => {
@@ -16,14 +19,13 @@ export default function Keys() {
     }, [])
 
     return (
-        <main className="p-8">
+        <main>
             <Head>
                 <title>Manage Keys</title>
             </Head>
-            <h1 className="text-8xl font-bold tracking-tighter">
-                Manage API Keys
-            </h1>
-            <div className="keys mt-12">
+            <Nav session={session} loading={loading} signIn={signIn} />
+            <Header>Manage API Keys</Header>
+            <div className="keys mt-12 p-8 px-16">
                 {keys ? (
                     <table className="p-4 border-2 border-gray-300 w-full">
                         <thead className="p-2">
@@ -32,7 +34,7 @@ export default function Keys() {
                             <th className="text-left p-4">ID</th>
                             <th className="text-left p-4">API</th>
                             <th className="text-left p-4">Stage</th>
-                            <th></th>
+                            <th className="text-center p-4">Actions</th>
                         </thead>
                         <tbody>
                             {keys.result.items.map((i: any) => {
@@ -53,9 +55,9 @@ export default function Keys() {
                                                 ? i.stageKeys[0].split('/')[1]
                                                 : 'None'}
                                         </td>
-                                        <td className="p-4 flex justify-center items-center">
+                                        <td className="p-4 flex justify-start items-center">
                                             <Link href={`/k/` + i.id}>
-                                                <a className="bg-blue-500 text-white rounded-lg shadow-2xl py-2 px-8">
+                                                <a className="bg-blue-500 text-white text-center rounded-lg shadow-2xl py-2 px-8 w-full">
                                                     View
                                                 </a>
                                             </Link>
@@ -76,20 +78,20 @@ export default function Keys() {
 }
 
 export async function getServerSideProps(context: any) {
-    const session = await getSession(context);
+    const session = await getSession(context)
 
     if (!session) {
         return {
             redirect: {
                 destination: '/',
-                permanent: false
-            }
+                permanent: false,
+            },
         }
     } else {
         return {
             props: {
-                session
-            }
+                session,
+            },
         }
     }
 }
