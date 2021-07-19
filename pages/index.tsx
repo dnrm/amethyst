@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession,  } from 'next-auth/client'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import Nav from '../components/Nav'
@@ -9,17 +8,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function Home() {
-    const [keys, setKeys] = useState<any>()
     const [session, loading] = useSession()
-
-    useEffect(() => {
-        const get = async () => {
-            const response = await fetch('/api/get-keys')
-            const json = await response.json()
-            setKeys(json)
-        }
-        get()
-    }, [])
+    console.log(session)
 
     return (
         <main className="">
@@ -34,7 +24,7 @@ export default function Home() {
             <Header>API Key Manager</Header>
             <section
                 id="get-started"
-                className="px-16 py-16 md:py-0 grid grid-cols-1 md:grid-cols-5 place-items-center"
+                className="px-4 md:px-16 py-16 md:py-0 grid grid-cols-1 md:grid-cols-5 place-items-center"
             >
                 <div className="text col-span-3">
                     <h2 className="text-4xl font-bold tracking-tighter">
@@ -42,18 +32,21 @@ export default function Home() {
                     </h2>
                     <br />
                     <Link href={'/keys'}>
-                        <a className="text-lg font-light px-8 py-4 bg-yellow-500 text-white rounded-lg shadow-lg">
+                        <a className="text-lg font-light px-8 py-4 bg-yellow-600 text-white rounded-lg shadow-lg">
                             Get started
                         </a>
                     </Link>
                 </div>
-                <div className="images w-full col-span-2">
+                <div className="images w-full col-span-2 py-8 md:py-8">
                     <Image
-                        src="/auth.svg"
+                        src="/bg.jpg"
                         width="100%"
-                        height="100%"
+                        height="80%"
                         layout="responsive"
                         alt="Authentication illustration"
+                        className="object-cover"
+                        placeholder="blur"
+                        blurDataURL="/bg-sm.jpg"
                     />
                 </div>
             </section>
