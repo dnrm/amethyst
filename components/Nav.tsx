@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Nav = ({ session, loading, signIn }: any) => {
     return (
-        <nav className="h-20 flex justify-between items-center px-8 w-full border-t-4 border-yellow-600">
+        <nav className="h-20 flex justify-between items-center px-4 md:px-8 w-full border-t-4 border-yellow-600">
             <div className="links flex justify-start gap-4">
                 <Link href="/">
                     <a className="text-gray-700 text-lg hover:underline">
