@@ -41,7 +41,7 @@ export default function Home() {
                         Manage your AWS API keys with a user friendly interface.
                     </h2>
                     <br />
-                    <Link href={session ? '/keys' : '/login'}>
+                    <Link href={'/keys'}>
                         <a className="text-lg font-light px-8 py-4 bg-yellow-500 text-white rounded-lg shadow-lg">
                             Get started
                         </a>
