@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { signIn, signOut, useSession,  } from 'next-auth/client'
+import { useSession,  } from 'next-auth/client'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -7,9 +7,8 @@ import Nav from '../components/Nav'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-export default function Home() {
+const Home: React.FC = (): JSX.Element => {
     const [session, loading] = useSession()
-    console.log(session)
 
     return (
         <main className="">
@@ -20,7 +19,7 @@ export default function Home() {
                     content="A system to manage your aws API keys."
                 />
             </Head>
-            <Nav session={session} signIn={signIn} />
+            <Nav session={session} loading={loading} />
             <Header>API Key Manager</Header>
             <section
                 id="get-started"
@@ -54,3 +53,5 @@ export default function Home() {
         </main>
     )
 }
+
+export default Home

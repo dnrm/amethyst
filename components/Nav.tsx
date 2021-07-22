@@ -1,7 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
+import { Session } from 'next-auth'
 
-const Nav = ({ session, loading, signIn }: any) => {
+// * Types
+
+type NavProps = {
+    session: Session | null,
+    loading?: Boolean,
+}
+
+const Nav: React.FC<NavProps> = ({ session, loading }: NavProps) => {
     return (
         <nav className="h-20 flex justify-between items-center px-4 md:px-8 w-full border-t-4 border-yellow-600">
             <div className="links flex justify-start gap-4">
@@ -17,14 +25,14 @@ const Nav = ({ session, loading, signIn }: any) => {
                 </Link>
             </div>
             <div className="user">
-                {session ? (
+                {session && session.user ? (
                     <div className="h-full flex justify-center items-center">
                         <p className="text-gray-500 mr-4 text-sm">
                             {/* @ts-ignore */}
                             {session.user.email}
                         </p>
                         <img
-                            src={session.user.image}
+                            src={session.user.image ? session.user.image : ''}
                             className="h-12 rounded-full shadow-2xl"
                             alt=""
                         />

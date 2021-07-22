@@ -1,6 +1,10 @@
 import React from 'react'
 
-const Header = (props: any) => {
+type HeaderProps = {
+    children: any
+}
+
+const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     return (
         <header
             className={'p-8 py-16'}

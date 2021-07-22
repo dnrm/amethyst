@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getSession, useSession, signIn } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/client'
 
 import Nav from '../components/Nav'
 import Header from '../components/Header'
@@ -9,12 +9,14 @@ import Footer from '../components/Footer'
 
 import useAdmin from '../hooks/useAdmin'
 
-export default function Keys() {
+import Key from '../types/Key'
+
+const Keys: React.FC = (): JSX.Element => {
     const [keys, setKeys] = useState<any>()
     const [session, loading] = useSession()
     const admin = useAdmin(session)
 
-    useEffect(() => {
+    useEffect((): void => {
         const get = async () => {
             try {
                 const response = await fetch('/api/get-keys')
@@ -25,15 +27,13 @@ export default function Keys() {
         get()
     }, [])
 
-    console.log(admin)
-
     return (
         <>
             <main className="pb-16 -mb-16 min-h-screen">
                 <Head>
                     <title>Manage Keys</title>
                 </Head>
-                <Nav session={session} loading={loading} signIn={signIn} />
+                <Nav session={session} loading={loading} />
                 <Header>Manage API Keys</Header>
                 {admin ? (
                     <>
@@ -76,7 +76,7 @@ export default function Keys() {
                                     <tbody>
                                         {keys
                                             ? keys.result.items.map(
-                                                  (i: any) => {
+                                                  (i: Key) => {
                                                       return (
                                                           <tr
                                                               key={i.id}
@@ -149,6 +149,8 @@ export default function Keys() {
         </>
     )
 }
+
+export default Keys
 
 export async function getServerSideProps(context: any) {
     const session = await getSession(context)

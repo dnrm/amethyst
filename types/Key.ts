@@ -4,5 +4,6 @@ export default interface Key {
     description?: string
     enabled?: boolean
     createdDate?: string
-    lastUpdatedDate?: string
+    lastUpdatedDate?: string,
+    stageKeys: string[]
 }

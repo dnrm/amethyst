@@ -15,10 +15,10 @@ export default NextAuth({
         }),
     ],
     session: {
-        jwt: true
+        jwt: true,
     },
     pages: {
-        signIn: '/login'
-    }
+        signIn: '/login',
+    },
     // adapter: FaunaAdapter({ faunaClient: client }),
 })

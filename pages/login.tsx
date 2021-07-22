@@ -8,8 +8,12 @@ import Nav from '../components/Nav'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const Login = ({ providers }: any) => {
-    const [session] = useSession()
+type LoginProps = {
+    providers: Object
+}
+
+const Login: React.FC<LoginProps> = ({ providers }: LoginProps): JSX.Element => {
+    const [session, loading] = useSession()
 
     return (
         <>
@@ -21,7 +25,7 @@ const Login = ({ providers }: any) => {
                         content="A system to manage your aws API keys."
                     />
                 </Head>
-                <Nav session={session} signIn={signIn} />
+                <Nav session={session} loading={loading} />
                 <Header>Login</Header>
                 <section id="form" className="p-8">
                     {Object.values(providers).map((provider: any) => {

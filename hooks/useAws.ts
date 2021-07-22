@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
-const useAws = () => {
+const useAws: Function = () => {
     const [status, setStatus] = useState<boolean>()
 
     useEffect(() => {
-       const get = async () => {
+       const get: Function = async (): Promise<void> => {
            const response = await fetch('/api/get-keys')
            setStatus(response.status == 200 ? true : false);
        }
