@@ -1,6 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { APIGateway } from 'aws-sdk'
+import * as AWS from 'aws-sdk'
 import { GetApiKeyRequest } from 'aws-sdk/clients/apigateway'
+
+AWS.config.update({
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID_DNRM || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_DNRM || '',
+    },
+})
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const id: string = req.query.id.toString()

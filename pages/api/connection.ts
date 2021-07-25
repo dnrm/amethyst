@@ -4,7 +4,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_ACCESS_KEY_ID) {
+    if (!process.env.AWS_ACCESS_KEY_ID_DNRM || !process.env.AWS_SECRET_ACCESS_KEY_ID_DNRM) {
         res.status(200).send({
             result: false,
         })

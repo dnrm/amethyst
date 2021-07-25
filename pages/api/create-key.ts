@@ -8,11 +8,20 @@ type Data = {
     name: string
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+AWS.config.update({
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID_DNRM,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_DNRM,
+    },
+})
 
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse
+) {
     if (req.method != 'POST') {
         return res.status(400).send({
-            message: 'Should be POST request'
+            message: 'Should be POST request',
         })
     }
 
@@ -21,10 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!session || session?.user?.email != 'daniel@medina.com') {
         res.status(403).send({
             status: 403,
-            message: 'Unauthorised'
+            message: 'Unauthorised',
         })
         return
-    }   
+    }
 
     const AWS = require('aws-sdk')
 
@@ -52,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     status: 500,
                     message: 'Internal server error',
                 })
-                return;
+                return
             } else {
                 key = data
 
