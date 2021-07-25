@@ -14,6 +14,13 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+
+    if (req.method != 'POST') {
+        return res.status(400).send({
+            message: 'Must be POST request'
+        })
+    }
+
     const session = await getSession({ req })
 
     if (!session || session?.user?.email != 'daniel@medina.com') {
