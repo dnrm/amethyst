@@ -11,7 +11,7 @@ AWS.config.update({
     },
 })
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const id: string = req.query.id.toString()
 
     const session = await getSession({ req })
