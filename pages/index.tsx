@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useSession,  } from 'next-auth/client'
+import { useSession } from 'next-auth/client'
 import Link from 'next/link'
 import Image from 'next/image'
 
