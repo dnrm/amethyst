@@ -2,6 +2,8 @@ import React from 'react'
 import { getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
+import Link from 'next/link'
 
 import type KeyType from '../../types/Key'
 
@@ -19,11 +21,15 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
     const router = useRouter()
     const [key, setKey] = useState<KeyType>()
 
+    const { addToast } = useToasts()
+
     const { id } = router.query
 
     const [name, setName] = useState<string>()
     const [description, setDescription] = useState<string>()
     const [enabled, setEnabled] = useState<boolean>()
+
+    const [status, setStatus] = useState<boolean | null>()
 
     useEffect(() => {
         const get = async () => {
@@ -33,7 +39,6 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
                 setKey(json.result)
                 setName(json.result.name)
                 setDescription(json.result.description)
-                console.log(json.result.enabled)
                 setEnabled(json.result.enabled == true ? true : false)
             }
         }
@@ -53,15 +58,44 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
         setEnabled(!enabled)
     }
 
-    const updateKey = (e: any) => {
+    const updateKey = async (e: any) => {
         e.preventDefault()
-        console.log(e)
         const request = {
+            id: key?.id,
             name: e.target[0].value,
             description: e.target[1].value,
-            enabled: enabled
+            enabled: enabled,
         }
         console.log(request)
+
+        try {
+            const response = await fetch('/api/edit-key', {
+                method: 'POST',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (response.ok) {
+                setStatus(true)
+                addToast('Success! The key was updated. :D', {
+                    appearance: 'success',
+                    autoDismiss: true,
+                })
+                router.push(`/k/${id}`)
+            } else {
+                setStatus(false)
+                addToast('Unable to update key. Try again later :c', {
+                    appearance: 'error',
+                    autoDismiss: true,
+                })
+            }
+
+            const json = await response.json()
+            console.log(json)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
@@ -81,6 +115,9 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
                     <hr />
                 </div>
                 <section id="information" className="p-8">
+                    <Link href={`/k/` + id}>
+                        <a>Back</a>
+                    </Link>
                     <h1 className="text-4xl font-bold tracking-tighter">
                         Information
                     </h1>
@@ -132,7 +169,10 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
                                         checked={enabled}
                                     />
                                 </div>
-                                <button type="submit" className="w-full bg-blue-500 hover:bg-blue-400 text-white py-4 rounded-lg shadow-md mt-8">
+                                <button
+                                    type="submit"
+                                    className="w-full bg-blue-500 hover:bg-blue-400 text-white py-4 rounded-lg shadow-md mt-8"
+                                >
                                     Save
                                 </button>
                             </div>
