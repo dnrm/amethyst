@@ -5,8 +5,8 @@ import { Session } from 'next-auth'
 // * Types
 
 type NavProps = {
-    session: Session | null,
-    loading?: Boolean,
+    session: Session | null
+    loading?: Boolean
 }
 
 const Nav: React.FC<NavProps> = ({ session, loading }: NavProps) => {
@@ -25,31 +25,37 @@ const Nav: React.FC<NavProps> = ({ session, loading }: NavProps) => {
                 </Link>
             </div>
             <div className="user">
-                {session && session.user ? (
-                    <div className="h-full flex justify-center items-center">
-                        <p className="text-gray-500 mr-4 text-sm">
-                            {/* @ts-ignore */}
-                            {session.user.email}
-                        </p>
-                        <img
-                            src={session.user.image ? session.user.image : ''}
-                            className="h-12 rounded-full shadow-2xl"
-                            alt=""
-                        />
-                    </div>
-                ) : loading ? (
-                    <div className="signin h-full">
-                        <p>Loading...</p>
-                    </div>
-                ) : (
-                    <div className="signin h-full">
-                        <Link href="/login">
-                            <a className="h-full">
-                                Sign in
-                            </a>
-                        </Link>
-                    </div>
-                )}
+                <Link href="/dashboard">
+                    <a>
+                        {session && session.user ? (
+                            <div className="h-full flex justify-center items-center">
+                                <p className="text-gray-500 mr-4 text-sm">
+                                    {/* @ts-ignore */}
+                                    {session.user.email}
+                                </p>
+                                <img
+                                    src={
+                                        session.user.image
+                                            ? session.user.image
+                                            : ''
+                                    }
+                                    className="h-12 rounded-full shadow-2xl"
+                                    alt=""
+                                />
+                            </div>
+                        ) : loading ? (
+                            <div className="signin h-full">
+                                <p>Loading...</p>
+                            </div>
+                        ) : (
+                            <div className="signin h-full">
+                                <Link href="/login">
+                                    <a className="h-full">Sign in</a>
+                                </Link>
+                            </div>
+                        )}
+                    </a>
+                </Link>
             </div>
         </nav>
     )
