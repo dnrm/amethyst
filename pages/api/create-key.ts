@@ -10,6 +10,8 @@ type Data = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
+    return { message: 'WIP' }
+
     const session = await getSession({ req })
 
     if (!session) {

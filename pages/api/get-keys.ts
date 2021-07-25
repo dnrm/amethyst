@@ -2,17 +2,26 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { APIGateway } from 'aws-sdk'
 import { GetApiKeysRequest } from 'aws-sdk/clients/apigateway'
 import { getSession } from 'next-auth/client'
+import { getToken } from 'next-auth/jwt'
+
+const secret = process.env.SECRET;
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
     const session = await getSession({ req })
+    const token = await getToken({ req, secret })
+
+    if (token) {
+        console.log(JSON.stringify(token, null, 2))
+    }
 
     if (!session) {
         res.status(403).send({
             status: 403,
             message: 'Unauthorised',
         })
+        return
     }
 
     const api = new APIGateway({

@@ -12,6 +12,7 @@
         "@next-auth/fauna-adapter": "^0.2.2",
         "aws-sdk": "^2.948.0",
         "faunadb": "^4.3.0",
+        "mongodb": "^3.5.9",
         "next": "11.0.1",
         "next-auth": "^3.27.3",
         "react": "17.0.2",
