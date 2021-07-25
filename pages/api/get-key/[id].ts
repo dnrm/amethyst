@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { APIGateway } from 'aws-sdk'
+import { getSession } from 'next-auth/client'
 import * as AWS from 'aws-sdk'
 import { GetApiKeyRequest } from 'aws-sdk/clients/apigateway'
 
@@ -12,6 +13,16 @@ AWS.config.update({
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const id: string = req.query.id.toString()
+
+    const session = await getSession({ req })
+
+    if (!session || session?.user?.email != 'daniel@medina.com') {
+        res.status(403).send({
+            status: 403,
+            message: 'Unauthorised',
+        })
+        return
+    }
 
     if (!id) {
         res.status(404).send({
