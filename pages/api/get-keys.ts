@@ -13,6 +13,7 @@ export default async function handler(
             status: 403,
             message: 'Unauthorised',
         })
+        return
     }
 
     const api = new APIGateway({
