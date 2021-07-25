@@ -8,10 +8,10 @@ export default async function handler(
 ) {
     const session = await getSession({ req })
 
-    if (!session) {
+    if (!session || session?.user?.email != 'daniel@medina.com') {
         res.status(403).send({
             status: 403,
-            message: 'Unauthorised',
+            message: 'Unauthorised'
         })
         return
     }

@@ -12,12 +12,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const session = await getSession({ req })
 
-    if (!session) {
+    if (!session || session?.user?.email != 'daniel@medina.com') {
         res.status(403).send({
             status: 403,
             message: 'Unauthorised'
         })
-    }
+        return
+    }   
 
     const AWS = require('aws-sdk')
 

@@ -58,7 +58,7 @@ const Keys: React.FC = (): JSX.Element => {
                                 </a>
                             </Link>
                         </div>
-                        <div className="keys px-4 md:px-16 overflow-x-scroll">
+                        <div className="keys px-4 md:px-16 overflow-x-scroll no-scrollbar">
                             {keys ? (
                                 <table className="p-4 border-2 border-gray-300 w-full">
                                     <thead className="p-2">

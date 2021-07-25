@@ -2,6 +2,7 @@ import React from 'react'
 import { getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 import type KeyType from '../../types/Key'
 
@@ -24,11 +25,8 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
     useEffect(() => {
         const get = async () => {
             if (id) {
-                console.log('a')
                 const response = await fetch(`/api/get-key/${id}`)
-                console.log(response)
                 const json = await response.json()
-                console.log(json.result)
                 setKey(json.result)
             }
         }
@@ -52,27 +50,44 @@ const Key: React.FC<Props> = ({ session }: Props): JSX.Element => {
                 <div className="spacer my-8 px-8">
                     <hr />
                 </div>
-                <section id="information" className="p-8">
-                    <h1 className="text-4xl font-bold tracking-tighter">
-                        Information
-                    </h1>
-                    {key ? (
-                        <div className="fields">
-                            <h2 className="text-2xl font-normal tracking-tighter">
-                                Name: {key.name}
-                            </h2>
-                            <h2 className="text-2xl font-normal tracking-tighter">
-                                Description: {key.description}
-                            </h2>
-                            <h2 className="text-2xl font-normal tracking-tighter">
-                                Enabled: {key.enabled ? 'True' : 'False'}
-                            </h2>
-                            <h2 className="text-2xl font-normal tracking-tighter">
-                                Created On: {/* @ts-ignore */}
-                                {new Date(key.createdDate).toDateString()}
-                            </h2>
-                        </div>
-                    ) : null}
+                <section id="information" className="px-8 grid grid-cols-5">
+                    <div className="info col-span-4">
+                        <h1 className="text-4xl font-bold tracking-tighter">
+                            Information
+                        </h1>
+                        {key ? (
+                            <div className="fields">
+                                <h2 className="text-2xl font-normal tracking-tighter">
+                                    Name: {key.name}
+                                </h2>
+                                <h2 className="text-2xl font-normal tracking-tighter">
+                                    Description: {key.description}
+                                </h2>
+                                <h2 className="text-2xl font-normal tracking-tighter">
+                                    Enabled: {key.enabled ? 'True' : 'False'}
+                                </h2>
+                                <h2 className="text-2xl font-normal tracking-tighter">
+                                    Created On: {/* @ts-ignore */}
+                                    {new Date(key.createdDate).toDateString()}
+                                </h2>
+                            </div>
+                        ) : null}
+                    </div>
+                    <div className="edit col-span-1 flex justify-end items-start">
+                        <Link href={'/e/' + key?.id}>
+                            <a className="flex bg-blue-500 text-white px-4 py-3 rounded-lg shadow-md hover:shadow-2xl transition-all duration-200 items-center justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 mr-1"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                                Edit
+                            </a>
+                        </Link>
+                    </div>
                 </section>
             </main>
             <Footer />
